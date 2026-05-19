@@ -20,7 +20,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TareasDbContext>(options =>
 {
     options.UseSqlServer(
-        "Server=TareasDB.mssql.somee.com;Database=TareasDB;User Id=ANTONIO001_SQLLogin_1;Password=tono123A;TrustServerCertificate=True;");
+         "Server=TareasDB.mssql.somee.com;Database=TareasDB;User Id=ANTONIO001_SQLLogin_1;Password=tono123A;TrustServerCertificate=True;");
 });
 
 
@@ -42,7 +42,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Tareas");
-    c.RoutePrefix = "swagger";
+    c.RoutePrefix = string.Empty; // 💡 Carga Swagger directo en la raíz de tu URL de Render
 });
 
 
@@ -211,10 +211,11 @@ app.MapDelete("/api/tareas/{id}", async (
 
 
 // =======================================
-// EJECUTAR API
+// EJECUTAR API (CONFIGURADO PARA RENDER)
 // =======================================
 
-app.Run();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Run($"http://0.0.0:{port}");
 
 
 // =======================================
